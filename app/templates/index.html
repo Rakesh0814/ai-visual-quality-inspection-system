@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>InspectAI | Bottle Quality Inspection</title>
+
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+
+  <nav class="navbar">
+
+    <div class="nav-container">
+
+      <a href="#" class="brand">
+        <div class="brand-icon">▣</div>
+        <span>Inspect<span class="brand-blue">AI</span></span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#home" class="active">Home</a>
+        <a href="#inspect">Inspect</a>
+        <a href="#model">Model</a>
+        <a href="#history">History</a>
+      </div>
+
+      <a
+        class="github-button"
+        href="#"
+        target="_blank"
+      >
+        GitHub
+        <span>→</span>
+      </a>
+
+    </div>
+
+  </nav>
+
+
+
+  <!-- ================= HERO ================= -->
+
+  <section id="home" class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-container">
+
+      <div class="hero-content">
+
+        <div class="hero-eyebrow">
+          COMPUTER VISION
+          <span>×</span>
+          QUALITY CONTROL
+        </div>
+
+        <h1>
+          AI-Powered<br />
+          Bottle
+          <span>Quality Inspection</span>
+        </h1>
+
+        <p class="hero-description">
+          Detect good or defective plastic bottles in real time using
+          computer vision and a trained PyTorch model.
+          Ensure consistent product quality with automated inspection.
+        </p>
+
+        <div class="hero-features">
+
+          <div class="hero-feature">
+
+            <div class="hero-feature-icon">
+              ⚡
+            </div>
+
+            <div>
+              <strong>Real-time<br />Inspection</strong>
+              <span>Instant model prediction</span>
+            </div>
+
+          </div>
+
+
+          <div class="hero-feature">
+
+            <div class="hero-feature-icon">
+              ◎
+            </div>
+
+            <div>
+              <strong>Deep Learning<br />Model</strong>
+              <span>MobileNetV3 architecture</span>
+            </div>
+
+          </div>
+
+
+          <div class="hero-feature">
+
+            <div class="hero-feature-icon">
+              ⚙
+            </div>
+
+            <div>
+              <strong>Simple<br />Workflow</strong>
+              <span>Upload and inspect</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Decorative factory graphic -->
+
+      <div class="hero-visual">
+
+        <div class="scanner scanner-one"></div>
+
+        <div class="hero-bottle bottle-back-1"></div>
+        <div class="hero-bottle bottle-back-2"></div>
+        <div class="hero-bottle bottle-back-3"></div>
+
+        <div class="hero-bottle main-bottle">
+
+          <div class="bottle-cap"></div>
+
+          <div class="bottle-body">
+            <div class="bottle-line line-1"></div>
+            <div class="bottle-line line-2"></div>
+            <div class="bottle-line line-3"></div>
+            <div class="bottle-line line-4"></div>
+          </div>
+
+        </div>
+
+        <div class="scan-box">
+
+          <span class="scan-label">
+            MODEL READY
+          </span>
+
+        </div>
+
+        <div class="conveyor conveyor-one"></div>
+        <div class="conveyor conveyor-two"></div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ================= INSPECTION ================= -->
+
+  <main>
+
+    <section id="inspect" class="inspection-section">
+
+      <div class="inspection-grid">
+
+
+        <!-- ================= UPLOAD ================= -->
+
+        <article class="panel upload-panel">
+
+          <div class="panel-heading">
+
+            <div class="panel-icon">
+              ▣
+            </div>
+
+            <div>
+              <h2>Upload Bottle Image</h2>
+
+              <p>
+                Upload an image of a plastic bottle to check whether
+                it is good or defective.
+              </p>
+            </div>
+
+          </div>
+
+
+          <label id="dropZone" class="upload-zone">
+
+            <input
+              id="fileInput"
+              type="file"
+              accept="image/*"
+              hidden
+            />
+
+
+            <div id="uploadPlaceholder" class="upload-placeholder">
+
+              <div class="upload-cloud">
+                ⇧
+              </div>
+
+              <strong>
+                Drag & drop a bottle image here
+              </strong>
+
+              <span>
+                or click to browse
+              </span>
+
+              <div class="choose-button">
+                Choose Image
+              </div>
+
+              <small>
+                Supports: JPG, PNG, JPEG
+              </small>
+
+            </div>
+
+
+            <img
+              id="preview"
+              class="preview hidden"
+              alt="Bottle preview"
+            />
+
+          </label>
+
+
+          <button id="runButton" class="inspect-button">
+
+            Run Inspection
+
+            <span>→</span>
+
+          </button>
+
+        </article>
+
+
+
+        <!-- ================= RESULT ================= -->
+
+        <article class="panel result-panel">
+
+          <div class="panel-heading">
+
+            <div class="panel-icon">
+              ▥
+            </div>
+
+            <div>
+
+              <h2>
+                Prediction Result
+              </h2>
+
+              <p>
+                AI model result with confidence score.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="result-main">
+
+            <div class="result-image-container">
+
+              <img
+                id="resultImage"
+                class="result-image hidden"
+                alt="Inspection result"
+              />
+
+              <div
+                id="resultEmpty"
+                class="result-empty"
+              >
+                Bottle preview
+              </div>
+
+            </div>
+
+
+            <div class="result-details">
+
+
+              <div
+                id="resultStatus"
+                class="prediction-status waiting"
+              >
+
+                <div class="prediction-icon">
+                  ○
+                </div>
+
+                <div>
+
+                  <span>Prediction</span>
+
+                  <strong id="prediction">
+                    WAITING
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+
+              <div class="confidence-card">
+
+                <span>
+                  Confidence
+                </span>
+
+                <strong id="confidence">
+                  —
+                </strong>
+
+              </div>
+
+
+
+              <div class="result-row">
+
+                <div class="result-row-icon">
+                  ◈
+                </div>
+
+                <div>
+
+                  <span>
+                    Defect Probability
+                  </span>
+
+                  <strong id="defectProbability">
+                    —
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+
+              <div class="result-row">
+
+                <div class="result-row-icon">
+                  ◉
+                </div>
+
+                <div>
+
+                  <span>
+                    Backend
+                  </span>
+
+                  <strong id="backend">
+                    —
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+          <div id="message" class="result-message">
+
+            Upload a bottle image to begin inspection.
+
+          </div>
+
+
+          <div id="modelMeta" class="model-meta"></div>
+
+        </article>
+
+      </div>
+
+
+
+      <!-- ================= FEATURE CARDS ================= -->
+
+      <section id="model" class="feature-grid">
+
+
+        <div class="feature-card">
+
+          <div class="feature-icon">
+            ⚡
+          </div>
+
+          <div>
+
+            <h3>
+              Real-time Inspection
+            </h3>
+
+            <p>
+              Instant predictions for uploaded bottle images.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="feature-card">
+
+          <div class="feature-icon">
+            ◉
+          </div>
+
+          <div>
+
+            <h3>
+              Custom Bottle Dataset
+            </h3>
+
+            <p>
+              Trained on labelled good and defective bottle images.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="feature-card">
+
+          <div class="feature-icon">
+            ◈
+          </div>
+
+          <div>
+
+            <h3>
+              PyTorch Model
+            </h3>
+
+            <p>
+              MobileNetV3-Small transfer-learning classifier.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="feature-card">
+
+          <div class="feature-icon">
+            ⚙
+          </div>
+
+          <div>
+
+            <h3>
+              Quality Control Workflow
+            </h3>
+
+            <p>
+              Computer-vision prototype for automated inspection.
+            </p>
+
+          </div>
+
+        </div>
+
+
+      </section>
+
+
+
+      <!-- ================= HISTORY ================= -->
+
+      <section id="history" class="history-panel">
+
+        <div class="history-heading">
+
+          <div>
+
+            <span class="section-label">
+              RECENT INSPECTIONS
+            </span>
+
+            <h2>
+              Inspection History
+            </h2>
+
+          </div>
+
+
+          <button
+            id="refreshButton"
+            class="refresh-button"
+          >
+            Refresh
+          </button>
+
+        </div>
+
+
+        <div class="history-table-wrapper">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  FILE
+                </th>
+
+                <th>
+                  RESULT
+                </th>
+
+                <th>
+                  CONFIDENCE
+                </th>
+
+                <th>
+                  BACKEND
+                </th>
+
+                <th>
+                  TIME
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="historyBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+
+
+  <footer>
+
+    <div>
+
+      <strong>
+        Inspect<span>AI</span>
+      </strong>
+
+      <p>
+        AI-powered plastic bottle quality inspection.
+      </p>
+
+    </div>
+
+  </footer>
+
+
+  <script src="/static/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "architecture": "MobileNetV3-Small",
+  "framework": "PyTorch",
+  "dataset": "Custom plastic bottle dataset",
+  "task": "good vs defect bottle classification",
+  "validation_accuracy": 0.85,
+  "image_size": 224,
+  "threshold": 0.5
+}

@@ -1,0 +1,9 @@
+fastapi[standard]>=0.141,<1.0
+python-multipart>=0.0.20
+pydantic-settings>=2.10,<3.0
+pillow>=11.0
+numpy>=2.0
+torch>=2.6
+torchvision>=0.21
+huggingface-hub>=0.35
+pytest>=8.0
